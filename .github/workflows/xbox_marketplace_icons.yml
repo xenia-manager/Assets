@@ -1,4 +1,4 @@
-name: Download and Upload Boxarts from Xbox Marketplace
+name: Download and Upload Icons from Xbox Marketplace
 
 on:
   workflow_dispatch:
