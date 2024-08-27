@@ -32,7 +32,12 @@ def chunk_files(file_sizes):
 
     return chunks
 
+def update_sparse_checkout_paths(paths):
+    subprocess.run(['git', 'sparse-checkout', 'set'] + paths, check=True)
+
 def commit_and_push(chunk, commit_message):
+    # Update sparse-checkout paths to include the chunk files
+    update_sparse_checkout_paths(chunk)
     
     # Stage files
     subprocess.run(['git', 'add'] + chunk, check=True)
