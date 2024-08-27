@@ -25,18 +25,37 @@ def scrape_and_download():
         print(f"Failed to fetch JSON data. Exception: {e}")
 
 def download_and_organize_images(game_data):
+    box_art_env = os.getenv('BOX_ART_ENV', None)
+    icon_env = os.getenv('ICON_ENV', None)
+    
+    if not box_art_env and not icon_env:
+        print("Error: No environment variable for box art or icon specified.")
+        return
+    
     for game in game_data:
-        url = game["Box art"]
-        if url:
-            image_name = f"{game['ID']}.jpg"
-            folder_path = os.path.join("Assets","Marketplace","Boxart")
-            os.makedirs(folder_path, exist_ok=True)
-            file_path = os.path.join(folder_path, image_name)
-            download_image(url, file_path)
-            print(f"Downloaded: {file_path}")
+        if box_art_env:
+            box_art_url = game.get(box_art_env)
+            if box_art_url:
+                image_name = f"{game['ID']}_boxart.jpg"
+                folder_path = os.path.join("Assets", "Marketplace", "Boxart")
+                os.makedirs(folder_path, exist_ok=True)
+                file_path = os.path.join(folder_path, image_name)
+                download_image(box_art_url, file_path)
+                print(f"Downloaded box art: {file_path}")
+            else:
+                print(f"No box art found for {game['Title']}.")
 
-        else:
-            print(f"No image found for {game['Title']}.")
+        if icon_env:
+            icon_url = game.get(icon_env)
+            if icon_url:
+                image_name = f"{game['ID']}_icon.jpg"
+                folder_path = os.path.join("Assets", "Marketplace", "Icons")
+                os.makedirs(folder_path, exist_ok=True)
+                file_path = os.path.join(folder_path, image_name)
+                download_image(icon_url, file_path)
+                print(f"Downloaded icon: {file_path}")
+            else:
+                print(f"No icon found for {game['Title']}.")
 
 if __name__ == "__main__":
     scrape_and_download()
