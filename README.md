@@ -1,2 +1,2 @@
 # Assets
-Backup of Box Arts from Xbox Marketplace
+Backup of assets from Xbox Marketplace
