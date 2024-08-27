@@ -40,4 +40,5 @@ jobs:
       - name: Commit and push changes in chunks
         run: python Scripts/commit_and_push_chunks.py
         env:
+          WORK_ENV: "icons"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
