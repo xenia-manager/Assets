@@ -36,7 +36,7 @@ def download_and_organize_images(game_data):
         if box_art_env:
             box_art_url = game.get(box_art_env)
             if box_art_url:
-                image_name = f"{game['ID']}_boxart.jpg"
+                image_name = f"{game['ID']}.jpg"
                 folder_path = os.path.join("Assets", "Marketplace", "Boxart")
                 os.makedirs(folder_path, exist_ok=True)
                 file_path = os.path.join(folder_path, image_name)
@@ -48,7 +48,7 @@ def download_and_organize_images(game_data):
         if icon_env:
             icon_url = game.get(icon_env)
             if icon_url:
-                image_name = f"{game['ID']}_icon.jpg"
+                image_name = f"{game['ID']}.jpg"
                 folder_path = os.path.join("Assets", "Marketplace", "Icons")
                 os.makedirs(folder_path, exist_ok=True)
                 file_path = os.path.join(folder_path, image_name)
