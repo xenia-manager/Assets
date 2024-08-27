@@ -1,0 +1,43 @@
+name: Download and Upload Boxarts from Xbox Marketplace
+
+on:
+  workflow_dispatch:
+
+jobs:
+  download_boxarts:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            Scripts/xbox_marketplace_scraper.py
+            Scripts/commit_and_push_chunks.py
+            Assets/Marketplace/Boxarts/
+          sparse-checkout-cone-mode: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'  # Choose your Python version
+
+      - name: Install dependencies
+        run: |
+          pip install requests
+          pip install beautifulsoup4
+
+      - name: Run Xbox Marketplace Scraper for Boxarts
+        run: python Scripts/xbox_marketplace_scraper.py
+        env:
+          BOX_ART_ENV: "Box art"
+
+      - name: Configure Git
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+
+      - name: Commit and push changes in chunks
+        run: python Scripts/commit_and_push_chunks.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
