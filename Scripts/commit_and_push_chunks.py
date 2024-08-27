@@ -61,10 +61,10 @@ def main():
 
     # Chunk files
     chunks = chunk_files(file_sizes)
-
+    workName = os.getenv('WORK_ENV', 'images')
     # Commit and push each chunk
     for index, chunk in enumerate(chunks):
-        commit_message = f"Add downloaded images, part {index + 1}"
+        commit_message = f"Add downloaded {workName}, part {index + 1}"
         commit_and_push(chunk, commit_message)
 
 if __name__ == "__main__":
