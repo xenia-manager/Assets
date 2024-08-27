@@ -13,7 +13,7 @@ def download_image(url, target_path):
 
 def scrape_and_download():
     # URL of the JSON file containing game data
-    json_url = 'https://raw.githubusercontent.com/xenia-manager/xenia-manager-database/main/Database/xbox_marketplace_games.json'
+    json_url = 'https://gist.githubusercontent.com/shazzaam7/f5d16a46a0c16dd1b926af2ace3b9155/raw/92bc31a447b81907af70963b0ebc8bf21ea8334b/test.json'
     try:
         response = requests.get(json_url)
         if response.status_code == 200:
