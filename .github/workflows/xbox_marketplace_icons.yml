@@ -27,7 +27,7 @@ jobs:
           pip install requests
           pip install beautifulsoup4
 
-      - name: Run Xbox Marketplace Scraper for Boxarts
+      - name: Run Xbox Marketplace Scraper for Icons
         run: python Scripts/xbox_marketplace_scraper.py
         env:
           ICON_ENV: "Icon"
