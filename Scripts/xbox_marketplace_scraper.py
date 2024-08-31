@@ -12,7 +12,7 @@ def download_image(url, target_path):
         with open(target_path, 'wb') as f:
             f.write(response.content)
     except requests.exceptions.RequestException as e:
-        print(f"Failed to fetch data for titleid: {titleid} after {max_retries} attempts.")  
+        print(f"Failed to fetch image for {target_path}")  
 
 def download_and_organize_images(game_data):
     box_art_env = os.getenv('BOX_ART_ENV', None)
