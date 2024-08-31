@@ -49,7 +49,7 @@ def download_and_organize_images(game_data):
 
 def scrape_and_download():
     # URL of the JSON file containing game data
-    json_url = 'https://raw.githubusercontent.com/xenia-manager/xenia-manager-database/main/Database/xbox_marketplace_games.json'
+    json_url = 'https://raw.githubusercontent.com/xenia-manager/Database/main/Database/xbox_marketplace_games.json'
     try:
         response = requests.get(json_url)
         if response.status_code == 200:
