@@ -21,6 +21,10 @@ jobs:
           pip install requests
           pip install beautifulsoup4
 
+      - name: Remove existing boxarts
+        run: |
+          rm -rf Assets/Marketplace/Boxart/*
+
       - name: Run Xbox Marketplace Scraper for Boxarts
         run: python Scripts/xbox_marketplace_scraper.py
         env:
