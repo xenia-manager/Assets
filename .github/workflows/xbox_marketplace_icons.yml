@@ -10,17 +10,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            Scripts/xbox_marketplace_scraper.py
-            Scripts/commit_and_push_chunks.py
-            Assets/Marketplace/Icons/
-          sparse-checkout-cone-mode: false
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x'  # Choose your Python version
+          python-version: '3.x'
 
       - name: Install dependencies
         run: |
@@ -30,15 +24,17 @@ jobs:
       - name: Run Xbox Marketplace Scraper for Icons
         run: python Scripts/xbox_marketplace_scraper.py
         env:
-          ICON_ENV: "Icon"
+          BOX_ART_ENV: "Icon"
 
       - name: Configure Git
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
 
-      - name: Commit and push changes in chunks
-        run: python Scripts/commit_and_push_chunks.py
+      - name: Commit and push changes
+        run: |
+          git add .
+          git commit -m "Update icons from Xbox Marketplace"
+          git push
         env:
-          WORK_ENV: "icons"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
