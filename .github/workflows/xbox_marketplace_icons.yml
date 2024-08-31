@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  download_boxarts:
+  download_icons:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,7 +24,7 @@ jobs:
       - name: Run Xbox Marketplace Scraper for Icons
         run: python Scripts/xbox_marketplace_scraper.py
         env:
-          BOX_ART_ENV: "Icon"
+          ICON_ENV: "Icon"
 
       - name: Configure Git
         run: |
