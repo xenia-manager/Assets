@@ -79,11 +79,12 @@ def download_image(url, image_name, target_path):
     """
     Function that downloads the iamge to the target path
     """
+    response = None
     for attempt in range(MAX_RETRIES):
         try:
             response = requests.get(url, headers={
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'}, timeout=10)
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'}, verify=False)
             content_type = response.headers.get('Content-Type', '')
             if "image" in content_type:
                 extension = MIME_TYPE_TO_EXTENSION.get(content_type, '')
