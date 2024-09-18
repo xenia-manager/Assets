@@ -1,1 +1,12 @@
+name: Download and Upload Assets from Xbox Marketplace
 
+on:
+  workflow_dispatch:
+
+jobs:
+  download_boxarts:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
