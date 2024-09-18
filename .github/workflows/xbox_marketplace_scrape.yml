@@ -1,0 +1,66 @@
+name: Download and Upload Assets from Xbox Marketplace
+
+on:
+  workflow_dispatch:
+
+jobs:
+  download_artwork:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set Up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+          
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests python-dotenv Pillow
+
+      - name: Ensure Artwork Directory Exists
+        run: |
+          mkdir -p Artwork
+
+      - name: Run Xbox Marketplace Artwork Scraper
+        run: python Scripts/asset_scraper.py
+        env:
+          GAMES_LIST_URL: ${{ secrets.GAMES_LIST_URL }}
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          # List all files and split into batches of 2000, using numeric suffixes for chunk files
+          find "$(pwd)/Artwork/" -type f | split -l 2000 --numeric-suffixes=1 - filelist_chunk_
+
+          # Initialize counter for part number
+          part=1
+
+          for chunk in filelist_chunk_*; do
+            echo "Processing chunk: $chunk"
+            cat $chunk | while read file; do
+              # Double check the file exists before trying to add it
+              if [ -f "$file" ]; then
+                git add "$file"
+              else
+                echo "Warning: File not found - $file"
+              fi
+            done
+
+            # Check if there are staged changes
+            if ! git diff-index --quiet HEAD; then
+              # Commit if there are changes
+              git commit -m "Update Xbox Marketplace games info & assets (Part $part)"
+              part=$((part+1))
+            else
+              echo "No changes to commit for chunk $chunk"
+            fi
+          done
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
