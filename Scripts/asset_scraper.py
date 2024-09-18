@@ -113,11 +113,11 @@ def save_game_images(game_data):
     """
     os.makedirs(f'Artwork/{game_data['id']}', exist_ok=True) # Creates a directory for the game
     # Background
-    if game_data['artwork']['background'] is not None and not find_image("background", f'Artwork/{game_data['id']}/'):
-        download_image(game_data['artwork']['background'], 'background',f'Artwork/{game_data['id']}/background')
+    """if game_data['artwork']['background'] is not None and not find_image("background", f'Artwork/{game_data['id']}/'):
+        download_image(game_data['artwork']['background'], 'background',f'Artwork/{game_data['id']}/background')"""
     # Banner
-    if game_data['artwork']['banner'] is not None and not find_image("banner", f'Artwork/{game_data['id']}/'):
-        download_image(game_data['artwork']['banner'], 'banner',f'Artwork/{game_data['id']}/banner')
+    """if game_data['artwork']['banner'] is not None and not find_image("banner", f'Artwork/{game_data['id']}/'):
+        download_image(game_data['artwork']['banner'], 'banner',f'Artwork/{game_data['id']}/banner')"""
     # Boxart
     if game_data['artwork']['boxart'] is not None and not find_image("boxart", f'Artwork/{game_data['id']}/'):
         download_image(game_data['artwork']['boxart'], 'boxart',f'Artwork/{game_data['id']}/boxart')
